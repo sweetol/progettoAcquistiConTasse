@@ -5,6 +5,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ProductsListController
 {
+    
     public function getProductsList(): Response
     {
         $number = random_int(0, 100);
