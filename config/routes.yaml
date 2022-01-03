@@ -6,6 +6,6 @@ kernel:
     resource: ../src/Kernel.php
     type: annotation
 
-app_reviva_products_list:
+app_reviva_catalogo:
     path: /catalogo
     controller: App\Controller\CatalogoController::getCatalogo
