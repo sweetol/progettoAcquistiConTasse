@@ -50,7 +50,17 @@ class ProdottoImportato implements ProdottoInterface
         $netto = BigDecimal::of($this->getPrezzoNetto());
         $taxPercentage = $this->prodotto->getTipoProdotto()->getTax() + $this->importTax;
         if($taxPercentage>0){
-            $taxValue = $netto->multipliedBy($taxPercentage)->dividedBy(100,2,RoundingMode::HALF_UP);
+            $taxValueDoubleDeciaml = $netto->multipliedBy($taxPercentage)->dividedBy(100,2,RoundingMode::HALF_UP);
+            $taxValueSingleDecimal = $netto->multipliedBy($taxPercentage)->dividedBy(100,1,RoundingMode::HALF_UP);
+            $difference = $taxValueDoubleDeciaml->minus($taxValueSingleDecimal);
+            
+            if($difference->compareTo(BigDecimal::of(0.5))==0){
+                $taxValue = $taxValueDoubleDecimal;
+            }else if($difference->compareTo(BigDecimal::zero())>0){
+                $taxValue = $taxValueSingleDecimal->plus(BigDecimal::of(0.05));
+            }else{
+                $taxValue = $taxValueSingleDecimal;
+            }
         }else{
             $taxValue = BigDecimal::of(0);
         }
