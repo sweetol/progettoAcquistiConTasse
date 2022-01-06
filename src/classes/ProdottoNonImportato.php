@@ -1,12 +1,15 @@
 <?php
-namespace src\classes;
+namespace App\classes;
 
-use ProdottoInterface;
-use src\Prodotti;
+use App\classes\ProdottoInterface;
+use App\Entity\Prodotti;
+use Brick\Math\RoundingMode;
+use Brick\Math\BigDecimal;
 
-class ProdottoImportato implements ProdottoInterface
+class ProdottoNonImportato implements ProdottoInterface
 {
     private Prodotti $prodotto;
+    private int $quantity = 1;
     
     public function __construct(Prodotti $prodotto)
     {
@@ -17,17 +20,42 @@ class ProdottoImportato implements ProdottoInterface
         return $this->prodotto->getNome();
     }
     
+    public function getId(): ?int{
+        return $this->prodotto->getId();
+    }
+    
     public function getDescrizione(): ?string{
         return $this->prodotto->getDescrizione();
     }
     
-    public function getPrezzoLordo(): ?float{
+    public function getPrezzoNetto(): ?float{
         return $this->prodotto->getPrezzoLordo();
     }
     
+    public function getTotale(): ?float{
+        return BigDecimal::of($this->getPrezzoNetto())->plus(BigDecimal::of($this->getTax()))->multipliedBy($this->getQuantity())->toFloat();
+    }
+    
+    public function getQuantity(): ?int{
+        return $this->quantity;
+    }
+    
+    public function setQuantity($quantity){
+        if(intval($quantity)!=0){
+            $this->quantity = $quantity;
+        }
+    }
     
     public function getTax(): ?float{
+        $netto = BigDecimal::of($this->getPrezzoNetto());
+        $taxPercentage = $this->prodotto->getTipoProdotto()->getTax();
+        if($taxPercentage>0){
+            $taxValue = $netto->multipliedBy($taxPercentage)->dividedBy(100,2,RoundingMode::HALF_UP);
+        }else{
+            $taxValue = BigDecimal::of(0);
+        }
         
+        return  $taxValue->toFloat(); 
     }
         
 }
