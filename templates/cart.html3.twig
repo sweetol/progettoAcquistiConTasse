@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+<div class="container">
+	<br />
+
+	<nav class="nav nav-pills flex-column flex-sm-row">
+		<a class="flex-sm-fill text-sm-center nav-link"
+			aria-current="page" href="/catalogo"><div class="fa fa-list"> Products</div></a> <a
+			class="flex-sm-fill text-sm-center nav-link active" href="/cart"> <div class="fa fa-shopping-cart" > Cart ({% verbatim %}{{ mainCtrl.quantity }}{% endverbatim %}) 
+			</div></a>
+	</nav>
+
+	<br />
+
+	<div class="row">
+		<div class="col-12 mark text-right font-weight-bold">
+			Sales Taxes:
+			{{ taxes }}
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-12 mark text-right font-weight-bold">
+			Total:
+			{{ total }}
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-12 mark text-right font-weight-bold">
+			<button ng-click="mainCtrl.emptyCart()"
+				type="button" class="btn btn-danger fa fa-trash">Empty Cart</button>
+		</div>
+	</div>
+
+	<br />
+
+	{% for chunks in prodotti %}
+	<div class="row">
+
+		{% for prodotto in chunks %}
+		<div class="col-4">
+
+			<div class="card text-dark bg-light mb-3" style="max-width: 18rem;">
+				<div class="card-header">
+					<h6>
+						{{ prodotto.nome }}
+					</h6>
+				</div>
+				<div class="card-body">
+					<h7 class="card-title"> {{ prodotto.descrizione }} </h7>
+					<p class="card-text">
+						{{ prodotto.descrizione }}
+					</p>
+					<p class="card-text">
+						Net Price:
+						{{ prodotto.prezzoNetto }}
+					</p>
+					<p class="card-text">
+						Sales Tax:
+						{{ prodotto.tax }}
+					</p>
+					<p class="card-text">
+						Quantity:
+						{{ prodotto.quantity }}
+					</p>
+					<p class="card-text">
+						Total:
+						{{ prodotto.totale }}
+					</p>
+				</div>
+			</div>
+
+		</div>
+		{% endfor %}
+	</div>
+
+	{% endfor %}
+
+</div>
+
+{% endblock %}
