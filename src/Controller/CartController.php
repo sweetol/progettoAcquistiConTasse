@@ -9,31 +9,18 @@ use App\classes\ProdottoFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Brick\Math\RoundingMode;
 use Brick\Math\BigDecimal;
+use App\Services\ProdottiService;
 
 class CartController extends AbstractController
 {
-    public function getCart(ProdottiRepository $prodottiRepository, Request $request): Response
+    public function getCart(ProdottiRepository $prodottiRepository, Request $request, ProdottiService $prodottiService): Response
     {
-        $totale = BigDecimal::of(0);
-        $taxes = BigDecimal::of(0);
+        $result = $prodottiService->getProductsListAndPriceFromCookies($prodottiRepository, $request);
         
-        $prodotti = array();
-        
-        $i=0;
-        foreach($request->cookies as $id => $quantity ){
-            $prodotti[$i] = ProdottoFactory::getProdotto(
-                    $prodottiRepository->find($id)
-                );
-            $prodotti[$i]->setQuantity($quantity);
-            $totale = $totale->plus(BigDecimal::of($prodotti[$i]->getPrezzoNetto())->plus(BigDecimal::of($prodotti[$i]->getTax()))->multipliedBy($quantity));
-            $taxes = $taxes->plus(BigDecimal::of($prodotti[$i]->getTax())->multipliedBy($quantity));
-            $i++;
-        }
-            
         return $this->render('cart.html3.twig', [
-            'prodotti' => array_chunk($prodotti, 3),
-            'total' => $totale,
-            'taxes' => $taxes
+            'prodotti' => array_chunk($result[0], 3),
+            'total' => $result[1],
+            'taxes' => $result[2]
         ]);
         
     }

@@ -7,24 +7,14 @@ use App\Entity\Prodotti;
 use App\Repository\ProdottiRepository;
 use App\classes\ProdottoFactory;
 
+use App\Services\ProdottiService;
+
 class CatalogoController extends AbstractController
 {
-    public function getCatalogo(ProdottiRepository $prodottiRepository): Response
+    public function getCatalogo(ProdottiRepository $prodottiRepository, ProdottiService $prodottiService): Response
     {
-        $prodotti = $prodottiRepository->findAll();
-       
-        foreach($prodotti as $i => $prodotto ){
-            $prodotti[$i] = ProdottoFactory::getProdotto($prodotto);
-        }
-        
-        if (!$prodotti) {
-            throw $this->createNotFoundException(
-                'No product available '
-                );
-        }
-        
         return $this->render('catalogo.html2.twig', [
-            'prodotti' => array_chunk($prodotti, 3)
+            'prodotti' => array_chunk($prodottiService->getCatalogo($prodottiRepository), 3)
         ]);
         
     }
