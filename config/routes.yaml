@@ -9,3 +9,7 @@ kernel:
 app_reviva_catalogo:
     path: /catalogo
     controller: App\Controller\CatalogoController::getCatalogo
+    
+app_reviva_cart:
+    path: /cart
+    controller: App\Controller\CartController::getCart
