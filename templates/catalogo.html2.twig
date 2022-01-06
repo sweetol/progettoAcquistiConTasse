@@ -2,7 +2,66 @@
 
 
 {% block body %}
-    <h1>Catalogo</h1>
 
-{{ prodotti[0].id }}
+<div class="container">
+	<br />
+
+	<nav class="nav nav-pills flex-column flex-sm-row">
+		<a class="flex-sm-fill text-sm-center nav-link active"
+			aria-current="page" href="/catalogo"><div class="fa fa-list"> Products</div></a> <a
+			class="flex-sm-fill text-sm-center nav-link" href="/cart"> <div class="fa fa-shopping-cart" > Cart ( {% verbatim %} {{ mainCtrl.quantity }} {% endverbatim %} ) 
+			</div></a>
+	</nav>
+
+	<br />
+
+	{% for chunks in prodotti %}
+	<div class="row">
+
+		{% for prodotto in chunks %}
+		<div class="col-4">
+
+			<div class="card text-dark bg-light mb-3" style="max-width: 18rem;">
+				<div class="card-header">
+					<div class="row">
+						<div class="col-8">
+							<h6>
+								{{ prodotto.nome }}
+							</h6>
+						</div>
+						<div class="col-4">
+							<button 
+							ng-click="mainCtrl.addToCart({{ prodotto.id }},1)"
+							type="button" class="btn btn-primary btn-sm">+</button>
+						</div>
+					</div>
+				</div>
+				<div class="card-body">
+					<h7 class="card-title"> {{ prodotto.descrizione }} </h7>
+					<p class="card-text">
+						{{ prodotto.descrizione }}
+					</p>
+					<p class="card-text">
+						Net Price:
+						{{ prodotto.prezzoNetto }}
+					</p>
+					<p class="card-text">
+						Sales Tax:
+						{{ prodotto.tax }}
+					</p>
+					<p class="card-text">
+						Total:
+						{{ prodotto.tax + prodotto.prezzoNetto }}
+					</p>
+				</div>
+			</div>
+
+		</div>
+		{% endfor %}
+	</div>
+
+	{% endfor %}
+
+</div>
+
 {% endblock %}
