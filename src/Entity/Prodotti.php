@@ -44,9 +44,9 @@ class Prodotti
     private $descrizione;
 
     /**
-     * @var binary
+     * @var string
      *
-     * @ORM\Column(name="imported", type="binary", nullable=false)
+     * @ORM\Column(name="imported", type="string", nullable=false)
      */
     private $imported;
 
