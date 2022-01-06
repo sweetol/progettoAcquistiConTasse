@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="app-vito-arcidiacono">
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
@@ -9,6 +9,11 @@
            <!--  bootstrap  -->
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         
+          	<link rel="stylesheet" href="styles/animate.css">
+          	<link rel="stylesheet" href="styles/css/all.css">
+        	<link rel="stylesheet" href="styles/angular-super-gallery.css">
+        	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Ladda/1.0.6/ladda-themeless.min.css">
+        
         {% endblock %}
 
         {% block javascripts %}
@@ -17,11 +22,29 @@
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-			<!-- angularjs -->
- 			<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+			<!--  angularjs -->
+			<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular.min.js"></script>
+			<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular-route.js"> </script>
+			<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular-touch.js"> </script>
+        
+        	<!--  angularjs dependencies -->
+        	<script src="scripts/apis/lodash.js"></script>
+		    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular-cookies.js"></script>
+        	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular-animate.js"></script>	
+        	<script src="https://cdnjs.cloudflare.com/ajax/libs/Ladda/1.0.6/spin.min.js"></script>
+        	<script src="https://cdnjs.cloudflare.com/ajax/libs/Ladda/1.0.6/ladda.min.js"></script>
+        	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ladda/0.4.3/angular-ladda.min.js"></script>
+            <script src="scripts/apis/angular-super-gallery.js"></script>
+
+			<!-- app angularjs -->
+        	<script src="scripts/app.js"></script>
+        	<script src="scripts/controllers/MainCtrl.js"></script>
+        	<script src="scripts/services/CookieService.js"></script>
+                               
+            
         {% endblock %}
     </head>
-    <body>
+    <body ng-controller="MainCtrl as mainCtrl">
         {% block body %}{% endblock %}
     </body>
 </html>
